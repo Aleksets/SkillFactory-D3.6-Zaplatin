@@ -78,6 +78,9 @@ class Post(models.Model):
         else:
             return self.text
 
+    def __str__(self):
+        return f'{self.title}\n{self.add_date.strftime("%d.%m.%Y")}\n{self.text}'
+
 
 # Модель PostCategory
 # Промежуточная модель для связи «многие ко многим»:
