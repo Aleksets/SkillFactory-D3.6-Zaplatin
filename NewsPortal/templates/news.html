@@ -1,33 +1,34 @@
 <!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
 
+<!--  загружаем пользовательские фильтры -->
+{% load custom_filters %}
 <!-- Название у нас будет News -->
 {% block title %}
-News
+    News
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
+<!-- В контенте на странице мы выводим все новости/статьи -->
 {% block content %}
-   <h1>Новости и статьи</h1>
-   <h3>Всего на текущий момент: {{ news|length }}</h3>
-   <hr>
-   {% if news %}
-       <table>
-           <tr>
-               <td>Заголовок</td>
-               <td>Дата публикации</td>
-               <td>Превью</td>
-           </tr>
-
-           {% for post in news %}
-           <tr>
-               <td>{{ post.title }}</td>
-               <td>{{ post.add_date|date:'d.m.Y' }}</td>
-               <td>{{ post.text|truncatechars:21 }}</td>
-           </tr>
-           {% endfor %}
-       </table>
-   {% else %}
-       <h2>Новостей нет!</h2>
-   {% endif %}
+    <h1>Новости и статьи</h1>
+    <h3>Всего на текущий момент: {{ news|length }}</h3>
+    <hr>
+    {% if news %}
+        <table>
+            <tr>
+                <td>Заголовок</td>
+                <td>Дата публикации</td>
+                <td>Превью</td>
+            </tr>
+            {% for post in news %}
+            <tr>
+                <td>{{ post.title|censor }}</td>
+                <td>{{ post.add_date|date:'d.m.Y' }}</td>
+                <td>{{ post.text|truncatechars:21|censor }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2>Новостей нет!</h2>
+    {% endif %}
 {% endblock content %}
